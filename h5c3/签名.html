@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.box{
+				width: 500px;
+				margin: 100px auto 0;
+				border: 3px solid #000;
+			}
+			
+			.canvas{
+				display: block;
+				background-color: #fff;
+			}
+			
+			.x{
+				width: 500px;
+				margin: 0 auto;
+			}
+			
+			.color-block{
+				width: 200px;
+				height: 200px;
+				background-color: #000;
+			}
+			
+			.img-box{
+				width: 160px;
+			}
+			
+			.auto-img{
+				width: 100%;
+				display: block;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<canvas class="canvas" id="canvas" width="500px" height="300px"></canvas>
+		</div>
+		
+		<div class="x">
+			画笔大小：<input type="range" id="penSize" min="10" max="100" value="10">
+			<span id="size">1.0px</span>
+		</div>
+		
+		<div>
+			红：<input type="range" id="r" class="cb" min="0" max="255" value="0"/>
+			<span id="r1">0</span>
+		</div>
+		
+		<div>
+			绿：<input type="range" id="g" class="cb" min="0" max="255" value="0"/>
+			<span id="g1">0</span>
+		</div>
+		
+		<div>
+			蓝：<input type="range" id="b" class="cb" min="0" max="255" value="0"/>
+			<span id="b1">0</span>
+		</div>
+		
+		<div class="color-block"></div>
+		
+		<div>
+			<button id="save">保存为图片</button>
+			<button id="clear">清除</button>
+			<button id="restore">恢复</button>
+		</div>
+		
+		<div>
+			<h4>预览图</h4>
+			<div class="img-box">
+				<img id="preview" class="auto-img" src="" alt=""/>
+			</div>
+		</div>
+		
+		<script>
+			window.onload = function(){
+				// var canvas = document.getElementById('canvas').getContext('2d');
+				var canvas = document.getElementById('canvas');
+				var context = canvas.getContext('2d');
+				// console.log('context =>',context);
+				
+				var rgb = {
+					r: 0,
+					g: 0,
+					b: 0,
+					
+				};
+				
+				canvas.onmousedown = function(e){
+					
+					//清除临时canvas的图形
+					temporaryContext.clearRect(0,0,canvas.width,canvas.height);
+					
+					//获取画笔大小
+					var psize = penSize.value / 10;
+					
+					//开始绘制路径
+					context.beginPath();
+					
+					//设置绘制线条的颜色
+					context.strokeStyle = 'rgb(' + rgb.r + ',' +rgb.g + ',' + rgb.b + ')';
+					
+					//设置画笔大小
+					context.lineWidth = psize;
+					
+					//绘制线条起点
+					context.moveTo(e.offsetX,e.offsetY);
+					
+					//鼠标移动
+					this.onmousemove = function(ev){
+						
+						//绘制线条终点
+						context.lineTo(ev.offsetX,ev.offsetY);
+						
+						//描边
+						context.stroke();
+					}
+				}
+				
+				canvas.onmouseup = function(){
+					this.onmousemove = null;
+					context.closePath();
+				}
+				
+				canvas.onmouseleave = function(){
+					this.onmousemove = null;
+					context.closePath();
+				}
+				
+				var size = document.getElementById('size');
+				var penSize = document.getElementById('penSize');
+				//修改画笔大小
+				penSize.oninput = function(){
+					var value = (this.value / 10).toFixed(1);
+					
+					size.textContent = value + 'px';
+				}
+				
+				var cbs = document.querySelectorAll('.cb');
+				// console.log('cbs=>',cbs);
+				
+				var colorBlock = document.querySelector('.color-block');
+				
+				for(var i=0;i<cbs.length;i++){
+					cbs[i].oninput = function(){
+						//r, g, b
+						var id = this.getAttribute('id');
+						
+						document.getElementById(id + '1').textContent = this.value;
+						
+						rgb[id] = this.value;
+						
+						colorBlock.style.backgroundColor = 'rgb(' + rgb.r + ',' +rgb.g + ',' + rgb.b + ')';
+					}
+				}
+				
+				var preview = document.getElementById('preview');
+				
+				document.getElementById('save').onclick = function(){
+					
+					//base64
+					var base64 = canvas.toDataURL('image/png');
+					// console.log(base64);
+					
+					//将base64赋值给img的src
+					preview.src = base64;
+					
+					//创建a
+					var a = document.createElement('a');
+					
+					a.href = base64;
+					
+					//设置下载默认名称
+					a.download = 'cvs' + new Date().getTime();
+					
+					//模拟点击a
+					a.click();
+				}
+				
+				//创建一个临时canvas, 保存清除主canvas图形
+				var temporarycanvas = document.createElement('canvas');
+				temporarycanvas.width = canvas.width;
+				temporarycanvas.height = canvas.height;
+				
+				//获取临时canvas上下文环境
+				var temporaryContext = temporarycanvas.getContext('2d');
+				
+				//清除画布
+				document.getElementById('clear').onclick = function(){
+					
+					//使用临时canvas保存主canvas图形, drawImage(图片, x, y, width, height)
+					temporaryContext.drawImage(canvas,0,0,canvas.width,canvas.height);
+					
+					//清除画布 clearRect(x, y, width, height)
+					context.clearRect(0,0,canvas.width,canvas.height);
+				}
+				
+				document.getElementById('restore').onclick = function(){
+					
+					//将上一次清除的图形绘制到主canvas, 将临时canvas的图形绘制到主canvas
+					context.drawImage(temporarycanvas,0,0,canvas.width,canvas.height);
+					
+					//清除临时canvas图形
+					temporaryContext.clearRect(0,0,canvas.width,canvas.height);
+				}
+				
+			}
+		</script>
+		
+	</body>
+</html>

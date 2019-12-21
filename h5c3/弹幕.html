@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>视频</title>
+		<style>
+			.box{
+				width: 800px;
+				margin: 0 auto;
+				position: relative;
+				/* overflow: hidden; */
+			}
+			.v{
+				width: 100%;
+				display: block;
+				position: relative;
+				z-index: 1;
+			}
+			.btn{
+				margin: 30px auto 0;
+				width: 160px;
+				height: 36px;
+				background-color: #e4393c;
+				border-bottom: 3px solid #640A0A;
+				border-radius: 10px;
+				text-align: center;
+				line-height: 36px;
+				font-size: 18px;
+				color: #fff;
+				cursor: pointer;
+			}
+			.btn:active{
+				border-bottom: none;
+			}
+			.box>span{
+				position: absolute;
+				left: 800px;
+				top: 0;
+				white-space: nowrap;
+				z-index: 2;
+				color: #f5b23e;
+			}
+			.v2{
+				-webkit-text-fill-color: transparent;
+				-webkit-background-clip: text;
+				background-image: linear-gradient(to right,#E6DB74,#F2DE22);
+				font-size: 24px;
+				font-weight: bold;
+			}
+			.inp-text{
+				float: left;
+				color: #C9E255;
+				font-weight: bold;
+			}
+			.barrage{
+				float: right;
+			}
+			.barrage>button{
+				color: #DB77DD;
+				font-weight: bold;
+			}
+			.nax{
+				width: 800px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box" class="box">
+			<video id="v" class="v" src="我和我的祖国.mp4"></video>
+		</div>
+		
+		<div class="nax">
+			<div class="inp-text">
+				普通会员<input type="radio" name="vip" data-vip="0" data-auth="v0" checked/>
+				高级会员<input type="radio" name="vip" data-vip="1" data-auth="v1"/>
+				黄金会员<input type="radio" name="vip" data-vip="2" data-auth="v1"/>
+			</div>
+			
+			<div class="barrage">
+				<input id="text" type="text" placeholder="弹幕" maxlength="30"/>
+				<button id="send">发射</button>
+			</div>
+		</div>
+		
+		<div id="btn" class="btn" data-play="0">播放</div>
+		
+		<script src="jquery-3.4.1.js"></script>
+		<script>
+			$(function(){
+				
+				function getId(id){
+					return document.getElementById(id);
+				}
+				
+				//视频弹幕时间容差 -+ 0.12
+				var tolerance = 0.2;
+				var v = getId('v');
+				var btn =  getId('btn');
+				//是否存在弹幕数据
+				var dms = localStorage.getItem('dms');
+				
+				dms = dms ? JSON.parse(dms) : [];
+				console.log('dms =>',dms);
+				
+				//记录上次查找弹幕的位置
+				var dmIndex = 0;
+				
+				//保存已生成弹幕的id
+				//视频实时变化事件
+				v.ontimeupdate = function(){
+					console.log('this.currentTime =>',this.currentTime);
+					
+					for(var i = dmIndex;i<dms.length;i++){
+						//如果找到
+						if(dms[i].d >= this.currentTime && dms[i].d <=this.currentTime + tolerance){
+							//查询符合当前播放时间所有弹幕
+							for(var j=i;j<dms.length;j++){
+								
+								if(dms[j].d >= this.currentTime && dms[j].d <=this.currentTime + tolerance){
+									
+									//创建span
+									var $span = $('<span class=" ' + (dms[j].v2 ? 'v2' : '') + ' ">' + dms[j].t + '</span>');
+									
+									$span.css({
+										top:dms[j].top + 'px'
+									})
+									$('#box').append($span);
+									(function (n){
+										setTimeout(function(){
+											$span.animate({
+												left: '-' + dms[n].w
+											},10000,'linear',function(){
+												$span.remove();
+											})
+										},350)
+									})(j);
+								}else{
+									dmIndex = j;
+									//如果当前弹幕时间不符合条件，直接执行当前循环
+									break;
+								}
+							}
+							
+							break;
+							
+						}
+					}
+				}
+				btn.onclick = function(){
+					
+					//0: 正在停止
+					//1: 正在播放
+					
+					var playStatus = this.dataset.play;
+					
+					if(playStatus == 0){
+						//播放视频
+						v.play();
+						this.dataset.play = 1;
+						this.textContent = '暂停';
+					}else{
+						//暂停视频
+						v.pause();
+						this.dataset.play = 0;
+						this.textContent = '播放';
+					}
+					
+				}
+				//生成弹幕范围
+				var danmuArea = null;
+				
+				setTimeout(function(){
+					//获取视频box高度
+					var height = parseFloat($('#box').css('height'));
+					//占20%
+					var v0Height = height * 0.2;
+					//占60%
+					var v1Height = height * 0.6;
+					//生成弹幕范围
+					danmuArea = {
+						v0: [[0,v0Height],[v1Height,height]],
+						v1: [[v0Height,v1Height]]
+					};
+				},200)
+				
+				var isSend = false;
+				
+				$('#send').on('click',function(){
+					
+					if(isSend){
+						console.log('发送弹幕过于频繁');
+						return;
+					}
+					isSend = true;
+					//每隔5秒发一次弹幕
+					setTimeout(function(){
+						isSend = false;
+					},5000)
+					//获取已勾选的单选框的data-auth
+					var auth = $('[type="radio"]:checked').data('auth');
+					console.log('auth=>',auth);
+					//获取符合当前vip的弹幕的top范围
+					var danmuTopData = danmuArea[auth];
+					console.log('danmuTopData=>',danmuTopData);
+					
+					var length = danmuTopData.length;
+					//生成随机下标
+					var index = Math.floor(Math.random() * length);
+					//随机获取top的范围
+					var currentTop = danmuTopData[index];
+					console.log('currentTop =>',currentTop);
+					//根据top的范围随机获取一个top
+					var top = Math.floor(Math.random() * (currentTop[1] - currentTop[0] +1) + currentTop[0]);
+					console.log('top=>',top);
+					//生成弹幕内容
+					var text = $('#text').val();
+					console.log('text =>',text);
+					
+					var $span = $('<span>' + text + '</span>');
+					
+					$('#box').append($span);
+					
+					//获取当前弹幕高度
+					var currentDanmuHeight = parseFloat($span.css('height'));
+					console.log('currentDanmuHeight =>',currentDanmuHeight);
+					//弹幕最大的top
+					var maxTop = currentTop[1] - currentDanmuHeight;
+					//控制top的值
+					top = top >= maxTop ? maxTop : top;
+					//设置当前弹幕的top
+					$span.css({
+						top: top + 'px'
+					})
+					//获取vip等级 0, 1, 2
+					var vipLevel = $('[type="radio"]:checked').data('vip');
+					if(vipLevel == 2){
+						$span.addClass('v2');
+					}
+					//获取当前弹幕的宽度
+					var currentWidth = $span.css('width');
+					console.log('currentWidth=>',currentWidth);
+					
+					setTimeout(function(){
+						$span.animate({
+							left:'-' + currentWidth
+						},10000, 'linear', function(){
+							console.log('动画已经完成');
+							//移当前弹幕元素
+							$span.remove();
+						})
+					},350)
+					//保存弹幕
+					dms.push({
+						//时间
+						d: v.currentTime,
+						//弹幕内容
+						t: text,
+						//弹幕位置
+						top: top,
+						//true: 超级vip, false: vip 、普通会员
+						v2: vipLevel ==2,
+						//弹幕宽度
+						w: currentWidth,
+						//弹幕id
+						id: 'dm' + new Date().getTime()
+					})
+					//按照弹幕时间排序弹幕内容
+					dms.sort(function(a,b){
+						return a.d - b.d;
+					})
+					
+					localStorage.setItem('dms',JSON.stringify(dms));
+					
+				})
+			})
+		</script>
+	</body>
+</html>

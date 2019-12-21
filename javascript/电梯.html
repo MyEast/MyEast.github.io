@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+			}
+			ul,ol{
+				list-style: none;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				overflow: hidden;
+			}
+			ul,ul li{
+				width: 100%;
+				height: 100%;
+				font-size: 50px;
+				text-align: center;
+			}
+			ol{
+				position: fixed;
+				top: 80px;
+				left: 80px;
+				border: 1px solid red;
+			}
+			ol li{
+				width: 80px;
+				height: 50px;
+				text-align: center;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<ul id="ul">
+			<li>首页1</li>
+			<li>首页2</li>
+			<li>首页3</li>
+			<li>首页4</li>
+			<li>首页5</li>
+		</ul>
+		
+		<ol id="ol">
+			<li>首页1</li>
+			<li>首页2</li>
+			<li>首页3</li>
+			<li>首页4</li>
+			<li>首页5</li>
+		</ol>
+		
+		<script type="text/javascript" src="js/base.js"></script>
+		<script>
+
+			window.onscroll = function(){
+				var scrollTop = window.pageYOffset || document
+			}
+
+			window.onload = function(){
+				var uls = $("#ul");
+				var Uli = uls.children;
+				var ols = $("#ol");
+				var Oli = ols.children;
+				var arr = ["#2acca8","#6e7be1","#dd4cd7","#cce135","#ddd"];
+				var leader = 0;
+				var target = 0;
+				var clear = null;
+				
+				document.onmousemove = function(){
+					scrollTo(0,0);
+					document.onmousemove = null;
+				}
+				
+				for(var i=0;i<Uli.length;i++){
+					Uli[i].style.backgroundColor = arr[i];
+					Oli[i].style.backgroundColor = arr[i];
+					Oli[i].index=i;
+					Oli[i].onclick = function(){
+						clearInterval(clear);
+						console.log(this.index*Uli[0].offsetHeight);
+						var target = this.index*Uli[0].offsetHeight;
+						clear = setInterval(function(){
+							leader = leader+(target - leader)/10;
+							scrollTo(0,leader);
+						},60);
+					}
+				}
+				
+			}
+		</script>
+	</body>
+</html>

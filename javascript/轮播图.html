@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/02.css">
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="slide" id="slide">
+				<ul>
+					<li>
+						<a href="">
+							<img src="images/slidepic1.png" alt="">
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="images/slidepic2.png" alt="">
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="images/slidepic3.png" alt="">
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="images/slidepic4.png" alt="">
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<img src="images/slidepic5.png" alt="">
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="arrow" id="arrow">
+				<a href="javascript:;"class="prev"></a>
+				<a href="javascript:;"class="next"></a>
+			</div>
+		</div>
+		<script src="js/base.js"></script>
+		<script>
+			var json = [
+				{
+					width: 400,
+					top: 0,
+					left: 50,
+					opacity: 40,
+					z: 1,
+				},{
+					width: 600,
+					top: 50,
+					left: 0,
+					opacity: 80,
+					z: 2,
+				},{
+					width: 800,
+					top: 80,
+					left: 200,
+					opacity: 100,
+					z: 3,
+				},{
+					width: 600,
+					top: 50,
+					left: 600,
+					opacity: 80,
+					z: 2,
+				},{
+					width: 400,
+					top: 0,
+					left: 750,
+					opacity: 40,
+					z: 1,
+				}
+			]
+			
+			var slide = $("#slide");
+			var box = $("#box");
+			var lis = slide.children[0].children;
+			var arrow = box.children[1];
+			var as = arrow.children;
+			
+			box.onmouseover = function(){
+				animate(arrow,{"opacity":100});
+			}
+			box.onmouseout = function(){
+				animate(arrow,{"opacity":0});
+			}
+			var btn = true;
+			for(k in as){
+				as[k].onclick = function(){
+					if(btn){
+						btn = false;
+						changeEvent(this.className =="prev");
+					}
+				}
+			}
+			changeEvent();
+			
+			function changeEvent(flag){
+				if(flag){
+					json.push(json.shift());
+				}else{
+					json.unshift(json.pop());
+				}
+				
+				for(var i=0;i<lis.length;i++){
+					animate(lis[i],{
+						"width":json[i].width,
+						"top":json[i].top,
+						"left":json[i].left,
+						"opacity":json[i].opacity,
+						"zIndex":json[i].z,
+					},function(){
+						btn = true;
+					})
+				}
+			}
+		</script>
+	</body>
+</html>

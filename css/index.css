@@ -1,0 +1,181 @@
+body{
+	margin: 0 auto;
+}
+ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+li{
+	margin: 0;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+}
+
+.box{
+	width: 100%;
+	height: 100%;
+}
+/* 头部 */
+.header{
+	width: 100%;
+	height: 60px;
+	background-color: #fff;
+	position: fixed;
+	border-bottom: 2px solid blue;
+	z-index: 1;
+}
+.nav-left{
+	width: 200px;
+	height: 60px;
+	line-height: 60px;
+	float: left;
+	text-align: center;
+	cursor: move;
+	font-weight: bold;
+	font-size: 24px;
+}
+.nav-right{
+	float: right;
+}
+.nav-right ul{
+	display: flex;
+	width: 700px;
+	height: 60px;
+	line-height: 60px;
+}
+.nav-right ul li{
+	float: left;
+	flex: 1;
+	cursor: pointer;
+	text-align: center;
+}
+.nav-right ul li:hover{
+	background-color: #ddd;
+}
+.nav-right ul li a{
+	color: #000;
+}
+.nav-right ul li:hover a{
+	color: red;
+}
+/* 中间 */
+.content{
+	width: 100%;
+}
+/* 全部目录 */
+.left{
+	width: 300px;
+	height: calc(100% - 60px);
+	position: fixed;
+	background: #EFEFEF;
+	top: 60px;
+}
+.left h2{
+	text-align: center;
+	cursor: move;
+}
+.left-uls{
+	width: 200px;
+	margin-left: 100px;
+}
+.left-uls li{
+	margin-top: 20px;
+}
+.left-uls li a{
+	color: blue;
+	font-size: 20px;
+}
+
+/* 项目内容 */
+.content2{
+	width: calc(100% - 300px);
+	height: 2870px;
+	margin-left: 300px;
+}
+.con-text{
+	position: relative;
+	top: 60px;
+}
+.con-html{
+	width: 49%;
+	height: 680px;
+	float: left;
+	cursor: pointer;
+}
+.con-html h1{
+	margin-left: 20px;
+}
+.con-html h1:hover{
+	color: blue;
+	cursor: move;
+}
+.con-css{
+	width: 49%;
+	height: 680px;
+	float: right;
+	cursor: pointer;
+}
+.con-css h1{
+	margin-left: 20px;
+}
+.con-css h1:hover{
+	color: blue;
+	cursor: move;
+}
+.mcyp{
+	width: 600px;
+	height: 600px;
+}
+.auto-img{
+	width: auto;
+	height: auto;
+}
+.con-text2{
+	width: calc(100% - 300px);
+	position: absolute;
+	top: 750px;
+}
+.con-text3{
+	width: calc(100% - 300px);
+	position: absolute;
+	top: 1440px;
+}
+.con-text4{
+	width: calc(100% - 300px);
+	position: absolute;
+	top: 2130px;
+}
+/* 底部 */
+.bottom{
+	width: calc(100% - 300px);
+	height: 100px;
+	background-color: #ddd;
+	position: absolute;
+	left: 300px;
+}
+span{
+	color: blue;
+	cursor: pointer;
+}
+.lxs{
+	width: 500px;
+	height: 30px;
+	display: block;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	color: #000000;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.spans{
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	display: block;
+	color: #000000;
+	margin: 0 auto;
+}

@@ -1,0 +1,432 @@
+/*通用*/
+body {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* 导航 开始*/
+.l {
+	width: 100%;
+	height: 100px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 99;
+}
+
+.la-1 {
+	width: 100%;
+	height: 50px;
+	background: #464545;
+}
+
+.la-1 p {
+	width: 40%;
+	height: 50px;
+	line-height: 50px;
+	font-size: 10px;
+	color: #bbb;
+	text-align: center;
+	float: right;
+}
+
+.la {
+	width: 100%;
+	height: 50px;
+	background: #000;
+}
+
+.la ul {
+	width: 1000px;
+	height: 50px;
+	background: #000;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.la ul li {
+	width: 100px;
+	float: left;
+	transform: all 2s;
+	cursor: pointer;
+}
+
+/* 导航 结束*/
+/*中间*/
+.lb {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	margin: 60px auto;
+}
+
+.lb-2 {
+	width: 100%;
+	height: 630px;
+	background: url(../images/apple1.jpg) no-repeat center center;
+}
+
+.lb-2-txt {
+	width: 300px;
+	height: 200px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	color: #fff;
+	text-align: center;
+}
+
+.lb-2-txt h1 {
+	font-size: 50px;
+}
+
+.lb-2-txt p {
+	font-size: 25px;
+}
+
+.lb-2-txt span {
+	font-size: 20px;
+}
+
+.lb-3 {
+	width: 100%;
+	padding: 50px;
+	margin: 15px 0;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: -50px auto;
+}
+
+.lb-3 h2 {
+	font-size: 30px;
+}
+
+.lb-3 h3 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 18px;
+	line-height: 35px;
+}
+
+.lb-3-tet {
+	padding-top: 10px;
+}
+
+.lb-3-tet a {
+	padding: 0 20px;
+}
+
+.lb-4 {
+	width: 100%;
+	height: 490px;
+	padding: 50px;
+	margin: 15px 0;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: 65px auto;
+}
+
+/*.lb-4 h2{font-size: 40px;}*/
+.lb-4 h3 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 18px;
+	line-height: 35px;
+}
+
+.lb-4-tet {
+	padding-top: 10px;
+}
+
+.lb-4-tet a {
+	padding: 0 20px;
+}
+
+.lb-4-img {
+	margin: 30px auto;
+}
+
+.lb-5 {
+	width: 100%;
+	height: 524px;
+	padding: 50px;
+	margin: 15px 0;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: -45px auto;
+}
+
+.lb-5 h3 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 18px;
+	line-height: 35px;
+}
+
+.lb-5-tet {
+	padding-top: 10px;
+}
+
+.lb-5-tet a {
+	padding: 0 20px;
+}
+
+.lb-5-img {
+	margin: 30px auto
+}
+
+.lc-1 {
+	width: 44%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: left;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: 60px auto;
+	background: url(../images/apple4.jpg) no-repeat center center;
+}
+
+.lc-1 h4 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 18px;
+	line-height: 35px;
+}
+
+.lc-1-tet {
+	padding-top: 10px;
+}
+
+.lc-1-tet a {
+	padding: 0 20px;
+}
+
+.lc-2 {
+	width: 45%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: right;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: 60px auto;
+	background: url(../images/apple5.jpg) no-repeat center center;
+}
+
+.lc-2 h4 {
+	width: 60%;
+	margin: 10px auto;
+	font-size: 32px;
+	line-height: 30px;
+}
+
+.lc-2-tet {
+	padding-top: 10px;
+}
+
+.lc-2-tet a {
+	padding: 0 20px;
+}
+
+.lc-3 {
+	width: 44%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: left;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: -45px auto;
+	background: url(../images/apple6.jpg) no-repeat center center;
+}
+
+.lc-3 h4 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 33px;
+	line-height: 35px;
+}
+
+.lc-3 h5 {
+	font-size: 18px;
+}
+
+.lc-3-tet {
+	padding-top: 10px;
+}
+
+.lc-3-tet a {
+	padding: 0 20px;
+}
+
+.lc-4 {
+	width: 45%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: right;
+	text-align: center;
+	color: #fff;
+	background: #fafafa;
+	margin: -45px auto;
+	background: url(../images/apple7.jpg) no-repeat center center;
+}
+
+.lc-4 h4 {
+	width: 35%;
+	margin: 10px auto;
+	font-size: 35px;
+	line-height: 35px;
+}
+
+.lc-4 h5 {
+	font-size: 18px;
+}
+
+.lc-4-tet {
+	padding-top: 10px;
+}
+
+.lc-4-tet a {
+	padding: 0 20px;
+}
+
+.lc-5 {
+	width: 44%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: left;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: 60px auto;
+	background: url(../images/apple8.png) no-repeat center center;
+}
+
+.lc-5 h4 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 18px;
+	line-height: 35px;
+}
+
+.lc-5 h5 {
+	font-size: 20px;
+	color: #fff
+}
+
+.lc-5-tet {
+	padding-top: 10px;
+}
+
+.lc-5-tet a {
+	padding: 0 20px;
+}
+
+.lc-5 .img {
+	margin: 330px auto;
+}
+
+.lc-6 {
+	width: 45%;
+	height: 500px;
+	padding: 40px;
+	margin: 15px 0;
+	float: right;
+	text-align: center;
+	color: #000;
+	background: #fafafa;
+	margin: 60px auto;
+	background-color: #fafafa;
+}
+
+.lc-6 h4 {
+	width: 31%;
+	margin: 10px auto;
+	font-size: 40px;
+	line-height: 35px;
+}
+
+.lc-6 h5 {
+	font-size: 20px;
+}
+
+.lc-6-tet {
+	padding-top: 10px;
+}
+
+.lc-6-tet a {
+	padding: 0 20px;
+}
+
+.lc-6 .img {
+	margin: 50px auto;
+}
+
+/*底部*/
+.ld {
+	width: 100%;
+	height: 570px;
+	margin: -45px auto;
+	float: left;
+	background: #f2f2f2;
+}
+
+.ld-1 {
+	width: 1000px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.ld-2 {
+	border-bottom: 1px solid #d0d0d0;
+}
+
+.ld-2 p {
+	font-size: 13px;
+	color: #888;
+	margin: 15px auto;
+}
+
+.ld-3 {
+	border-bottom: 1px solid #d0d0d0;
+}
+
+.ld-3 p {
+	width: 20%;
+	height: 100%;
+	float: left;
+}
+
+.ld-3 p {
+	font-size: 13px;
+	color: #000;
+	margin: 15px auto;
+}
+
+.ld-3 a {
+	font-size: 13px;
+	color: #888;
+}
